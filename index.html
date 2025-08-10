@@ -1,0 +1,524 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>كود إضافة أيقونة المبخرة للتقييمات</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            direction: rtl;
+            padding: 20px;
+            background: #f8f9fa;
+            color: #333;
+        }
+        
+        .code-section {
+            background: #fff;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 20px 0;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        .code-title {
+            color: #2563eb;
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 15px;
+            border-bottom: 2px solid #e5e7eb;
+            padding-bottom: 10px;
+        }
+        
+        pre {
+            background: #1e293b;
+            padding: 20px;
+            border-radius: 12px;
+            overflow-x: auto;
+            border: 1px solid #334155;
+            position: relative;
+            margin: 15px 0;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        }
+        
+        code {
+            font-family: 'Fira Code', 'JetBrains Mono', 'Cascadia Code', 'Monaco', 'Menlo', monospace;
+            font-size: 14px;
+            line-height: 1.6;
+            color: #e2e8f0;
+            direction: ltr;
+            text-align: left;
+            white-space: pre;
+            word-spacing: normal;
+            word-break: normal;
+            tab-size: 4;
+            hyphens: none;
+        }
+        
+        /* تلوين الكود */
+        code .selector {
+            color: #fbbf24;
+            font-weight: 600;
+        }
+        
+        code .property {
+            color: #60a5fa;
+        }
+        
+        code .value {
+            color: #34d399;
+        }
+        
+        code .comment {
+            color: #9ca3af;
+            font-style: italic;
+        }
+        
+        code .keyword {
+            color: #c084fc;
+            font-weight: 600;
+        }
+        
+        code .string {
+            color: #fb7185;
+        }
+        
+        code .number {
+            color: #22d3ee;
+        }
+        
+        /* تحسين مظهر الكود */
+        .code-section {
+            background: linear-gradient(135deg, #ffffff, #f8fafc);
+            border: 1px solid #e2e8f0;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .code-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, #3b82f6, #8b5cf6, #ec4899);
+        }
+        
+        .instruction {
+            background: #fef3c7;
+            border: 1px solid #f59e0b;
+            border-radius: 6px;
+            padding: 15px;
+            margin: 15px 0;
+        }
+        
+        .feature-list {
+            background: #ecfdf5;
+            border: 1px solid #10b981;
+            border-radius: 6px;
+            padding: 15px;
+            margin: 15px 0;
+        }
+        
+        .demo-section {
+            background: #fff;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 20px 0;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        /* كود المبخرة الفعلي للعرض التوضيحي */
+        .comment__rating {
+            position: relative;
+            display: flex !important;
+            align-items: center !important;
+            gap: 4px !important;
+        }
+
+        .incense-icon-custom {
+            display: inline-block !important;
+            width: 28px !important;
+            height: 28px !important;
+            background-image: url("https://res.cloudinary.com/dk2cdwufj/image/upload/v1754859938/Pngtree_islamic_incense_line_icon-arabian_coal_6258610_r6cipr.png") !important;
+            background-size: 18px 18px !important;
+            background-repeat: no-repeat !important;
+            background-position: center !important;
+            background-color: rgb(241, 230, 219) !important;
+            margin-left: 8px !important;
+            vertical-align: middle !important;
+            flex-shrink: 0 !important;
+            border-radius: 50% !important;
+            position: relative !important;
+            transition: all 0.3s ease !important;
+            box-shadow: 0 2px 4px rgba(241, 230, 219, 0.3), inset 0 1px 2px rgba(255, 255, 255, 0.6) !important;
+            border: 2px solid rgba(139, 69, 19, 0.2) !important;
+            filter: contrast(1.5) brightness(1.2) drop-shadow(0 1px 2px rgba(139, 69, 19, 0.3)) !important;
+        }
+
+        .incense-icon-custom::before {
+            content: '' !important;
+            position: absolute !important;
+            top: -2px !important;
+            left: -2px !important;
+            right: -2px !important;
+            bottom: -2px !important;
+            border-radius: 50% !important;
+            background: linear-gradient(45deg, 
+                rgba(139, 69, 19, 0.1), 
+                rgba(241, 230, 219, 0.2), 
+                rgba(139, 69, 19, 0.1)) !important;
+            z-index: -1 !important;
+            animation: incensePulse 2s infinite !important;
+        }
+
+        .incense-icon-custom::after {
+            content: '' !important;
+            position: absolute !important;
+            top: 50% !important;
+            left: 50% !important;
+            width: 6px !important;
+            height: 6px !important;
+            background: radial-gradient(circle, rgba(139, 69, 19, 0.4), rgba(241, 230, 219, 0.2), transparent) !important;
+            border-radius: 50% !important;
+            transform: translate(-50%, -50%) !important;
+            animation: incenseGlow 1.5s ease-in-out infinite alternate !important;
+        }
+
+        @keyframes incensePulse {
+            0%, 100% {
+                transform: scale(1);
+                opacity: 0.7;
+            }
+            50% {
+                transform: scale(1.05);
+                opacity: 0.3;
+            }
+        }
+
+        @keyframes incenseGlow {
+            0% {
+                opacity: 0.5;
+                transform: translate(-50%, -50%) scale(1);
+            }
+            100% {
+                opacity: 1;
+                transform: translate(-50%, -50%) scale(1.2);
+            }
+        }
+
+        .incense-icon-custom.loaded {
+            animation: incenseAppear 0.6s ease-out !important;
+        }
+
+        @keyframes incenseAppear {
+            0% {
+                opacity: 0;
+                transform: scale(0.3) rotate(-180deg);
+            }
+            70% {
+                opacity: 1;
+                transform: scale(1.1) rotate(10deg);
+            }
+            100% {
+                opacity: 1;
+                transform: scale(1) rotate(0deg);
+            }
+        }
+        
+        .demo-rating {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            margin: 10px 0;
+        }
+        
+        .star {
+            color: #fbbf24;
+            font-size: 16px;
+        }
+        
+        /* أسلوب زر النسخ */
+        .copy-btn {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: linear-gradient(135deg, #3b82f6, #1d4ed8);
+            color: white;
+            border: none;
+            padding: 10px 16px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 13px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            z-index: 10;
+            box-shadow: 0 2px 8px rgba(59, 130, 246, 0.3);
+            backdrop-filter: blur(10px);
+        }
+        
+        .copy-btn:hover {
+            background: linear-gradient(135deg, #2563eb, #1e40af);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(59, 130, 246, 0.5);
+        }
+        
+        .copy-btn.copied {
+            background: linear-gradient(135deg, #10b981, #059669);
+            box-shadow: 0 4px 12px rgba(16, 185, 129, 0.5);
+        }
+        
+        .copy-btn:active {
+            transform: translateY(0);
+        }
+        
+        pre {
+            position: relative;
+        }
+    </style>
+</head>
+<body>
+
+    <h1 style="text-align: center; color: #1f2937; margin-bottom: 30px;">
+        🔥 كود إضافة أيقونة المبخرة للتقييمات - موقع سلة
+    </h1>
+
+    <div class="instruction">
+        <h3>📋 طريقة الاستخدام في موقع سلة:</h3>
+        <p><strong>1.</strong> انسخ كود CSS ولصقه في قسم "CSS مخصص" في لوحة التحكم</p>
+        <p><strong>2.</strong> انسخ كود JavaScript ولصقه في قسم "JavaScript مخصص" في لوحة التحكم</p>
+        <p><strong>3.</strong> احفظ التغييرات وستظهر أيقونة المبخرة تلقائياً مع جميع التقييمات</p>
+    </div>
+
+    <div class="feature-list">
+        <h3>✨ المميزات المضافة:</h3>
+        <ul>
+            <li>🎨 خلفية دائرية بلون الموقع rgb(241, 230, 219)</li>
+            <li>💫 تأثيرات حركية احترافية (نبضة وتوهج)</li>
+            <li>🔄 تأثير ظهور بحركة دوران</li>
+            <li>📏 حجم مناسب مع النجوم</li>
+            <li>🖱️ تأثيرات تفاعلية عند التحويم</li>
+            <li>🔄 يعمل مع المحتوى الديناميكي</li>
+            <li>📱 متجاوب مع جميع الأجهزة</li>
+        </ul>
+    </div>
+
+    <!-- العرض التوضيحي -->
+    <div class="demo-section">
+        <h3 class="code-title">🎯 عرض توضيحي للنتيجة:</h3>
+        <div class="demo-rating comment__rating">
+            <span class="incense-icon-custom loaded"></span>
+            <span class="star">⭐</span>
+            <span class="star">⭐</span>
+            <span class="star">⭐</span>
+            <span class="star">⭐</span>
+            <span class="star">⭐</span>
+        </div>
+        <p style="color: #6b7280; font-size: 14px; margin-top: 10px;">
+            ⬆️ هكذا ستظهر أيقونة المبخرة مع النجوم 
+        </p>
+    </div>
+
+    <!-- كود CSS -->
+    <div class="code-section" dir="ltr">
+        <h2 class="code-title">🎨 كود CSS (ضعه في قسم CSS مخصص)</h2>
+        <pre><button class="copy-btn" onclick="copyCode(this)">📋 نسخ</button><code><span class="selector">.comment__rating</span> {
+    <span class="property">position</span>: <span class="value">relative</span>;
+    <span class="property">display</span>: <span class="value">flex</span> <span class="keyword">!important</span>;
+    <span class="property">align-items</span>: <span class="value">center</span> <span class="keyword">!important</span>;
+    <span class="property">gap</span>: <span class="number">4px</span> <span class="keyword">!important</span>;
+}
+
+<span class="selector">.incense-icon-custom</span> {
+    <span class="property">display</span>: <span class="value">inline-block</span> <span class="keyword">!important</span>;
+    <span class="property">width</span>: <span class="number">28px</span> <span class="keyword">!important</span>;
+    <span class="property">height</span>: <span class="number">28px</span> <span class="keyword">!important</span>;
+    <span class="property">background-image</span>: <span class="string">url("https://res.cloudinary.com/dk2cdwufj/image/upload/v1754859938/Pngtree_islamic_incense_line_icon-arabian_coal_6258610_r6cipr.png")</span> <span class="keyword">!important</span>;
+    <span class="property">background-size</span>: <span class="number">18px 18px</span> <span class="keyword">!important</span>;
+    <span class="property">background-repeat</span>: <span class="value">no-repeat</span> <span class="keyword">!important</span>;
+    <span class="property">background-position</span>: <span class="value">center</span> <span class="keyword">!important</span>;
+    <span class="property">background-color</span>: <span class="string">rgb(241, 230, 219)</span> <span class="keyword">!important</span>;
+    <span class="property">margin-left</span>: <span class="number">8px</span> <span class="keyword">!important</span>;
+    <span class="property">vertical-align</span>: <span class="value">middle</span> <span class="keyword">!important</span>;
+    <span class="property">flex-shrink</span>: <span class="number">0</span> <span class="keyword">!important</span>;
+    <span class="property">border-radius</span>: <span class="number">50%</span> <span class="keyword">!important</span>;
+    <span class="property">position</span>: <span class="value">relative</span> <span class="keyword">!important</span>;
+    <span class="property">transition</span>: <span class="value">all</span> <span class="number">0.3s</span> <span class="value">ease</span> <span class="keyword">!important</span>;
+    <span class="property">box-shadow</span>: <span class="number">0 2px 4px</span> <span class="string">rgba(241, 230, 219, 0.3)</span>, <span class="value">inset</span> <span class="number">0 1px 2px</span> <span class="string">rgba(255, 255, 255, 0.6)</span> <span class="keyword">!important</span>;
+    <span class="property">border</span>: <span class="number">2px</span> <span class="value">solid</span> <span class="string">rgba(139, 69, 19, 0.2)</span> <span class="keyword">!important</span>;
+    <span class="property">filter</span>: <span class="value">contrast</span>(<span class="number">1.5</span>) <span class="value">brightness</span>(<span class="number">1.2</span>) <span class="value">drop-shadow</span>(<span class="number">0 1px 2px</span> <span class="string">rgba(139, 69, 19, 0.3)</span>) <span class="keyword">!important</span>;
+}
+
+<span class="selector">.incense-icon-custom::before</span> {
+    <span class="property">content</span>: <span class="string">''</span> <span class="keyword">!important</span>;
+    <span class="property">position</span>: <span class="value">absolute</span> <span class="keyword">!important</span>;
+    <span class="property">top</span>: <span class="number">-2px</span> <span class="keyword">!important</span>;
+    <span class="property">left</span>: <span class="number">-2px</span> <span class="keyword">!important</span>;
+    <span class="property">right</span>: <span class="number">-2px</span> <span class="keyword">!important</span>;
+    <span class="property">bottom</span>: <span class="number">-2px</span> <span class="keyword">!important</span>;
+    <span class="property">border-radius</span>: <span class="number">50%</span> <span class="keyword">!important</span>;
+    <span class="property">background</span>: <span class="value">linear-gradient</span>(<span class="number">45deg</span>, 
+        <span class="string">rgba(139, 69, 19, 0.1)</span>, 
+        <span class="string">rgba(241, 230, 219, 0.2)</span>, 
+        <span class="string">rgba(139, 69, 19, 0.1)</span>) <span class="keyword">!important</span>;
+    <span class="property">z-index</span>: <span class="number">-1</span> <span class="keyword">!important</span>;
+    <span class="property">animation</span>: <span class="value">incensePulse</span> <span class="number">2s</span> <span class="value">infinite</span> <span class="keyword">!important</span>;
+}
+
+<span class="selector">.incense-icon-custom::after</span> {
+    <span class="property">content</span>: <span class="string">''</span> <span class="keyword">!important</span>;
+    <span class="property">position</span>: <span class="value">absolute</span> <span class="keyword">!important</span>;
+    <span class="property">top</span>: <span class="number">50%</span> <span class="keyword">!important</span>;
+    <span class="property">left</span>: <span class="number">50%</span> <span class="keyword">!important</span>;
+    <span class="property">width</span>: <span class="number">6px</span> <span class="keyword">!important</span>;
+    <span class="property">height</span>: <span class="number">6px</span> <span class="keyword">!important</span>;
+    <span class="property">background</span>: <span class="value">radial-gradient</span>(<span class="value">circle</span>, <span class="string">rgba(139, 69, 19, 0.4)</span>, <span class="string">rgba(241, 230, 219, 0.2)</span>, <span class="value">transparent</span>) <span class="keyword">!important</span>;
+    <span class="property">border-radius</span>: <span class="number">50%</span> <span class="keyword">!important</span>;
+    <span class="property">transform</span>: <span class="value">translate</span>(<span class="number">-50%</span>, <span class="number">-50%</span>) <span class="keyword">!important</span>;
+    <span class="property">animation</span>: <span class="value">incenseGlow</span> <span class="number">1.5s</span> <span class="value">ease-in-out</span> <span class="value">infinite</span> <span class="value">alternate</span> <span class="keyword">!important</span>;
+}
+
+<span class="keyword">@keyframes</span> <span class="selector">incensePulse</span> {
+    <span class="number">0%</span>, <span class="number">100%</span> {
+        <span class="property">transform</span>: <span class="value">scale</span>(<span class="number">1</span>);
+        <span class="property">opacity</span>: <span class="number">0.7</span>;
+    }
+    <span class="number">50%</span> {
+        <span class="property">transform</span>: <span class="value">scale</span>(<span class="number">1.05</span>);
+        <span class="property">opacity</span>: <span class="number">0.3</span>;
+    }
+}
+
+<span class="keyword">@keyframes</span> <span class="selector">incenseGlow</span> {
+    <span class="number">0%</span> {
+        <span class="property">opacity</span>: <span class="number">0.5</span>;
+        <span class="property">transform</span>: <span class="value">translate</span>(<span class="number">-50%</span>, <span class="number">-50%</span>) <span class="value">scale</span>(<span class="number">1</span>);
+    }
+    <span class="number">100%</span> {
+        <span class="property">opacity</span>: <span class="number">1</span>;
+        <span class="property">transform</span>: <span class="value">translate</span>(<span class="number">-50%</span>, <span class="number">-50%</span>) <span class="value">scale</span>(<span class="number">1.2</span>);
+    }
+}
+
+<span class="selector">.incense-icon-custom.loaded</span> {
+    <span class="property">animation</span>: <span class="value">incenseAppear</span> <span class="number">0.6s</span> <span class="value">ease-out</span> <span class="keyword">!important</span>;
+}
+
+<span class="keyword">@keyframes</span> <span class="selector">incenseAppear</span> {
+    <span class="number">0%</span> {
+        <span class="property">opacity</span>: <span class="number">0</span>;
+        <span class="property">transform</span>: <span class="value">scale</span>(<span class="number">0.3</span>) <span class="value">rotate</span>(<span class="number">-180deg</span>);
+    }
+    <span class="number">70%</span> {
+        <span class="property">opacity</span>: <span class="number">1</span>;
+        <span class="property">transform</span>: <span class="value">scale</span>(<span class="number">1.1</span>) <span class="value">rotate</span>(<span class="number">10deg</span>);
+    }
+    <span class="number">100%</span> {
+        <span class="property">opacity</span>: <span class="number">1</span>;
+        <span class="property">transform</span>: <span class="value">scale</span>(<span class="number">1</span>) <span class="value">rotate</span>(<span class="number">0deg</span>);
+    }
+}</code></pre>
+    </div>
+
+    <!-- كود JavaScript -->
+    <div class="code-section" dir="ltr">
+        <h2 class="code-title">⚡ كود JavaScript (ضعه في قسم JavaScript مخصص)</h2>
+        <pre><button class="copy-btn" onclick="copyCode(this)">📋 نسخ</button><code><span class="keyword">function</span> <span class="selector">addIncenseToRatings</span>() {
+    <span class="keyword">const</span> <span class="value">ratingElements</span> = <span class="value">document</span>.<span class="property">querySelectorAll</span>(<span class="string">'.comment__rating'</span>);
+    
+    <span class="value">ratingElements</span>.<span class="property">forEach</span>(<span class="keyword">function</span>(<span class="value">ratingElement</span>) {
+        <span class="keyword">if</span> (!<span class="value">ratingElement</span>.<span class="property">querySelector</span>(<span class="string">'.incense-icon-custom'</span>)) {
+            <span class="keyword">const</span> <span class="value">incenseIcon</span> = <span class="value">document</span>.<span class="property">createElement</span>(<span class="string">'span'</span>);
+            <span class="value">incenseIcon</span>.<span class="property">className</span> = <span class="string">'incense-icon-custom'</span>;
+            
+            <span class="property">setTimeout</span>(<span class="keyword">function</span>() {
+                <span class="value">incenseIcon</span>.<span class="property">classList</span>.<span class="property">add</span>(<span class="string">'loaded'</span>);
+            }, <span class="number">100</span>);
+            
+            <span class="value">ratingElement</span>.<span class="property">insertBefore</span>(<span class="value">incenseIcon</span>, <span class="value">ratingElement</span>.<span class="property">firstChild</span>);
+        }
+    });
+}
+
+<span class="value">document</span>.<span class="property">addEventListener</span>(<span class="string">'DOMContentLoaded'</span>, <span class="value">addIncenseToRatings</span>);
+<span class="value">window</span>.<span class="property">addEventListener</span>(<span class="string">'load'</span>, <span class="value">addIncenseToRatings</span>);
+
+<span class="keyword">const</span> <span class="value">incenseObserver</span> = <span class="keyword">new</span> <span class="property">MutationObserver</span>(<span class="keyword">function</span>(<span class="value">mutations</span>) {
+    <span class="keyword">let</span> <span class="value">shouldUpdate</span> = <span class="keyword">false</span>;
+    
+    <span class="value">mutations</span>.<span class="property">forEach</span>(<span class="keyword">function</span>(<span class="value">mutation</span>) {
+        <span class="value">mutation</span>.<span class="property">addedNodes</span>.<span class="property">forEach</span>(<span class="keyword">function</span>(<span class="value">node</span>) {
+            <span class="keyword">if</span> (<span class="value">node</span>.<span class="property">nodeType</span> === <span class="value">Node</span>.<span class="property">ELEMENT_NODE</span>) {
+                <span class="keyword">if</span> (<span class="value">node</span>.<span class="property">querySelector</span> && <span class="value">node</span>.<span class="property">querySelector</span>(<span class="string">'.comment__rating'</span>)) {
+                    <span class="value">shouldUpdate</span> = <span class="keyword">true</span>;
+                } <span class="keyword">else if</span> (<span class="value">node</span>.<span class="property">classList</span> && <span class="value">node</span>.<span class="property">classList</span>.<span class="property">contains</span>(<span class="string">'comment__rating'</span>)) {
+                    <span class="value">shouldUpdate</span> = <span class="keyword">true</span>;
+                }
+            }
+        });
+    });
+    
+    <span class="keyword">if</span> (<span class="value">shouldUpdate</span>) {
+        <span class="property">setTimeout</span>(<span class="value">addIncenseToRatings</span>, <span class="number">100</span>);
+    }
+});
+
+<span class="value">incenseObserver</span>.<span class="property">observe</span>(<span class="value">document</span>.<span class="property">body</span>, {
+    <span class="property">childList</span>: <span class="keyword">true</span>,
+    <span class="property">subtree</span>: <span class="keyword">true</span>
+});
+
+<span class="value">window</span>.<span class="property">updateIncenseIcons</span> = <span class="value">addIncenseToRatings</span>;
+<span class="property">setInterval</span>(<span class="value">addIncenseToRatings</span>, <span class="number">5000</span>);</code></pre>
+    </div>
+
+    <div class="instruction">
+        <h3>💡 ملاحظات مهمة:</h3>
+        <p><strong>• تأكد من وضع الكود في المكان الصحيح في لوحة تحكم سلة</strong></p>
+        <p><strong>• الكود يعمل تلقائياً مع جميع التقييمات الحالية والمستقبلية</strong></p>
+        <p><strong>• يمكنك تعديل اللون في الكود حسب لون موقعك</strong></p>
+        <p><strong>• الكود متوافق مع جميع المتصفحات الحديثة</strong></p>
+    </div>
+
+    <footer style="text-align: center; margin-top: 40px; padding: 20px; color: #6b7280; border-top: 1px solid #e5e7eb;">
+        <p>🔥 كود إضافة أيقونة المبخرة للتقييمات - لموقع سلة</p>
+        <p>تم إنشاؤه بواسطة Mohamed ELMAsri ❤️</p>
+    </footer>
+
+    <script>
+        function copyCode(button) {
+            const code = button.nextElementSibling.textContent;
+            
+            navigator.clipboard.writeText(code).then(function() {
+                const originalText = button.textContent;
+                button.textContent = 'تم النسخ!';
+                button.classList.add('copied');
+                
+                setTimeout(function() {
+                    button.textContent = originalText;
+                    button.classList.remove('copied');
+                }, 2000);
+            }).catch(function() {
+                // طريقة بديلة للنسخ في المتصفحات الأقدم
+                const textArea = document.createElement('textarea');
+                textArea.value = code;
+                document.body.appendChild(textArea);
+                textArea.select();
+                document.execCommand('copy');
+                document.body.removeChild(textArea);
+                
+                const originalText = button.textContent;
+                button.textContent = 'تم النسخ!';
+                button.classList.add('copied');
+                
+                setTimeout(function() {
+                    button.textContent = originalText;
+                    button.classList.remove('copied');
+                }, 2000);
+            });
+        }
+    </script>
+
+</body>
+</html>
